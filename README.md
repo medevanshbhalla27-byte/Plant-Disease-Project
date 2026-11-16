@@ -1,142 +1,250 @@
-# Plant Disease Detection using CNN
+# 🌿 Plant Disease Detection using CNN
 
-A deep-learning image classification project that uses a Convolutional Neural Network (CNN) built with TensorFlow/Keras to classify plant leaf images into the categories represented in the PlantVillage dataset.
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-orange)
+![Deep Learning](https://img.shields.io/badge/Deep%20Learning-CNN-green)
+![Computer Vision](https://img.shields.io/badge/Domain-Computer%20Vision-purple)
 
-> **Note:** This is an image-classification project. It predicts a class for a supplied leaf image; it is not a field-tested diagnostic system.
+A Deep Learning project that uses a **Convolutional Neural Network (CNN)** to classify plant leaf images into different disease categories using the PlantVillage dataset.
 
-## Project workflow
+The project demonstrates an end-to-end image classification workflow, including dataset exploration, image preprocessing, normalization, data augmentation, CNN architecture development, model training, and image prediction.
 
-1. **Dataset exploration** — inspect class folders, image counts, and a sample image.
-2. **Dataset loading** — load images from class-specific folders and create training/validation splits.
-3. **Normalization** — scale pixel values from `[0, 255]` to `[0, 1]` and prefetch batches.
-4. **CNN architecture** — build a CNN with convolution, max-pooling, global average pooling, dense, and dropout layers.
-5. **Training and saving** — apply data augmentation, train the model, save the best checkpoint, and save the final model.
+---
 
-## Model architecture
+## 📌 Project Overview
 
-- Input: `224 × 224 × 3`
-- Data augmentation: random horizontal flip, rotation, and zoom
-- Convolution blocks: 32, 64, and 128 filters
-- Max pooling after each convolution
-- Global Average Pooling
-- Dense layer: 128 units with ReLU
-- Dropout: `0.3`
-- Output: softmax with one unit per dataset class
+Plant diseases can affect agricultural productivity and crop quality. This project explores how Computer Vision and Deep Learning can be used to identify plant leaf disease categories from images.
 
-The model uses Adam, sparse categorical cross-entropy, and accuracy as its training metric. Training includes model checkpointing, early stopping, and learning-rate reduction on a validation-loss plateau.
+A CNN model is developed using TensorFlow and Keras to learn visual patterns from leaf images and classify them into the corresponding dataset categories.
 
-## Project structure
+## ✨ Features
+
+- PlantVillage dataset exploration
+- Image loading and preprocessing
+- Image resizing to 224 × 224 pixels
+- Pixel normalization (0–1)
+- Training and validation dataset splitting
+- Custom CNN architecture
+- Data augmentation
+- Model checkpointing
+- Early stopping and learning rate reduction
+- Trained model saving
+- Single-image prediction
+
+## 🧠 Model Architecture
+
+The CNN architecture consists of:
+
+| Layer | Configuration |
+|---|---|
+| Input | 224 × 224 × 3 |
+| Conv2D | 32 filters |
+| MaxPooling2D | 2 × 2 |
+| Conv2D | 64 filters |
+| MaxPooling2D | 2 × 2 |
+| Conv2D | 128 filters |
+| MaxPooling2D | 2 × 2 |
+| GlobalAveragePooling2D | Feature aggregation |
+| Dense | 128 neurons, ReLU |
+| Dropout | 0.3 |
+| Output | Softmax |
+
+**Optimizer:** Adam
+
+**Loss Function:** Sparse Categorical Crossentropy
+
+**Evaluation Metric:** Accuracy
+
+## 🔄 Data Augmentation
+
+To introduce image variations during training and improve the model's ability to generalize, the following techniques are used:
+
+- Random Horizontal Flip
+- Random Rotation (0.1)
+- Random Zoom (0.1)
+
+## 📂 Project Structure
 
 ```text
 Plant-Disease-Detection/
+│
 ├── config.py
+│
 ├── step1.py
 ├── step2.py
 ├── step3.py
 ├── step4.py
 ├── step5.py
+│
 ├── predict.py
+│
 ├── requirements.txt
 ├── README.md
 ├── .gitignore
-└── outputs/                 # created during training; ignored by Git
+│
+└── outputs/
     ├── best_model.keras
     ├── plant_model.keras
     └── class_names.json
 ```
 
-## Dataset setup
+## ⚙️ Installation
 
-Download the PlantVillage dataset separately and arrange it in class-specific folders:
+Clone the repository:
 
-```text
-PlantVillage/
-├── Tomato___healthy/
-│   ├── image_001.jpg
-│   └── ...
-├── Tomato___Early_blight/
-│   ├── image_001.jpg
-│   └── ...
-└── ...
+```bash
+git clone https://github.com/YOUR_USERNAME/Plant-Disease-Detection.git
 ```
 
-The folder name is used as the class label. The dataset itself is not included in this repository.
+Navigate to the project directory:
 
-By default, `config.py` uses:
-
-```python
-r"C:\Users\LENOVO\Downloads\PlantVillage"
+```bash
+cd Plant-Disease-Detection
 ```
 
-Change `DATASET_DIR` in `config.py` to your dataset location. Alternatively, set the `PLANTVILLAGE_DIR` environment variable.
+Create a virtual environment:
 
-**PowerShell example:**
+```bash
+python -m venv .venv
+```
+
+Activate the environment on Windows:
 
 ```powershell
-$env:PLANTVILLAGE_DIR = "C:\path\to\PlantVillage"
+.venv\Scripts\activate
 ```
 
-## Installation
+Install dependencies:
 
-Python 3.10 or 3.11 is recommended. Create and activate a virtual environment, then install dependencies:
-
-```powershell
-py -3.11 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
+```bash
 pip install -r requirements.txt
 ```
 
-Install a TensorFlow build compatible with your Python version and hardware if the default installation is not suitable for your system.
+## 📊 Dataset
 
-## Run the project
+This project uses the **PlantVillage Dataset**.
 
-Run these commands from the project root, in order:
+The dataset should be organized into class-specific folders:
 
-```powershell
+```text
+PlantVillage/
+│
+├── Tomato___healthy/
+├── Tomato___Early_blight/
+├── Tomato___Late_blight/
+├── Potato___healthy/
+└── ...
+```
+
+Each folder represents a separate classification category.
+
+The dataset is not included in this repository and must be downloaded separately.
+
+Update the dataset location in `config.py` before running the project.
+
+## 🚀 How to Run
+
+Execute the scripts in the following order:
+
+**Step 1 – Dataset Exploration**
+
+```bash
 python step1.py
+```
+
+**Step 2 – Dataset Loading**
+
+```bash
 python step2.py
+```
+
+**Step 3 – Image Normalization**
+
+This step is automatically imported during training.
+
+```bash
+python -c "import step3"
+```
+
+**Step 4 – CNN Model Architecture**
+
+```bash
 python step4.py
+```
+
+**Step 5 – Model Training**
+
+```bash
 python step5.py
 ```
 
-`step3.py` is imported by `step5.py` and applies normalization to the training and validation datasets. `step2.py` is also imported by later steps to keep class labels consistent.
+After training, the generated models and class labels are saved inside the `outputs/` directory.
 
-After training, the `outputs/` directory contains:
+## 🔍 Image Prediction
 
-- `best_model.keras` — checkpoint with the highest validation accuracy.
-- `plant_model.keras` — final model saved after training/early stopping.
-- `class_names.json` — ordered class labels required for prediction.
+Once the model has been trained, you can classify a new leaf image:
 
-## Predict an image
-
-After training, run:
-
-```powershell
-python predict.py "C:\path\to\leaf_image.jpg"
+```bash
+python predict.py "path/to/leaf_image.jpg"
 ```
 
-The script prints the predicted class and the model's softmax score for that class.
+The program returns:
 
-## Important evaluation note
+- Predicted plant disease category
+- Prediction confidence score
 
-The validation split is used during model development and checkpoint selection. It is not an independent test set. For a reliable estimate of performance on unseen images, keep a separate test dataset that is not used during training or model selection.
+## 💾 Model Outputs
 
-## Technologies
+| File | Description |
+|---|---|
+| `best_model.keras` | Best checkpoint based on validation accuracy |
+| `plant_model.keras` | Final saved model |
+| `class_names.json` | Class labels used during prediction |
+
+## 🛠️ Technologies Used
 
 - Python
-- TensorFlow / Keras
+- TensorFlow
+- Keras
 - NumPy
-- Pillow
-- CNN
-- Image preprocessing and data augmentation
+- Pillow (PIL)
+- Matplotlib
+- Convolutional Neural Networks
+- Computer Vision
 
-## Learning outcomes
+## 📚 Key Learnings
 
-- Image dataset exploration and loading
-- Image resizing and pixel normalization
-- Training/validation dataset splitting
-- CNN model construction
-- Data augmentation
-- Model checkpointing and training callbacks
-- Saving a trained model and running single-image predictions
+Through this project, I explored:
+
+1. Working with image classification datasets.
+2. Image preprocessing and normalization.
+3. Building CNN architectures from scratch.
+4. Implementing data augmentation.
+5. Training and validating deep learning models.
+6. Saving trained models using Keras.
+7. Performing predictions on unseen images.
+
+## 🔮 Future Improvements
+
+- Experiment with Transfer Learning (MobileNetV2, EfficientNet).
+- Compare different CNN architectures.
+- Add a dedicated independent test dataset.
+- Build a simple web interface for image uploads.
+- Improve model evaluation using precision, recall and F1-score.
+- Explore deployment using Flask or Streamlit.
+
+## ⚠️ Disclaimer
+
+This project is an educational machine learning experiment. Predictions are based on the image categories learned from the training dataset and should not be considered a substitute for professional agricultural diagnosis.
+
+---
+
+## 👨‍💻 Author
+
+Devansh
+
+Interested in Machine Learning, Deep Learning, Artificial Intelligence and Computer Vision.
+
+---
+
+⭐ If you find this project interesting, consider giving the repository a star!
